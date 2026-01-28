@@ -1,0 +1,19 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    .card-button {
+        margin: 10px;
+        padding: 0;
+        border: none;
+        background: none;
+    }
+    .card-image {
+        height: 130;
+        width: 100;
+    }
+    .card-image-disabled {
+        height: 130;
+        width: 100;
+        opacity: 0.5;
+    }
+}
