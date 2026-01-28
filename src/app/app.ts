@@ -246,7 +246,7 @@ export class App {
     }
     this.weapon.name = card.name;
     this.weapon.value = card.value;
-    this.weapon.maxEnemy = 14;
+    this.weapon.maxEnemy = 15;
     this.weapon.latestEnemyName = 'none';
     this.weapon.card = card;
     this.weapon.isVisible = true;
