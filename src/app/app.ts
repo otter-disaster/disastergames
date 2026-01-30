@@ -8,10 +8,7 @@ import { Component, signal } from '@angular/core';
 })
 export class App {
   protected readonly title = signal('scoundrel');
-  firstCardDisabled = false;
-  secondCardDisabled = false;
-  thirdCardDisabled = false;
-  fourthCardDisabled = false;
+
   shuffledDeck = [];
   discards = [];
   weapon = {name: '', value: 0, maxEnemy: 15, latestEnemyName: '', isActive: false, isVisible: false, card: {}};
@@ -80,11 +77,11 @@ export class App {
   }
 
   enableAllCards() {
-    this.firstCardDisabled = false;
-    this.secondCardDisabled = false;
-    this.thirdCardDisabled = false;
-    this.fourthCardDisabled = false;
-    this.firstCard.class = 'card-iamge';
+    this.firstCard.disabled = false;
+    this.secondCard.disabled = false;
+    this.thirdCard.disabled = false;
+    this.fourthCard.disabled = false;
+    this.firstCard.class = 'card-image';
     this.secondCard.class = 'card-image';
     this.thirdCard.class = 'card-image';
     this.fourthCard.class = 'card-image';
@@ -121,28 +118,30 @@ export class App {
       this.fourthCard = this.shuffledDeck[3];
       this.shuffledDeck.splice(0, 4);
     } else if (this.shuffledDeck.length > 3) {
-      if (this.firstCardDisabled) {
+      if (this.firstCard.disabled) {
         this.firstCard = this.shuffledDeck[0];
-        this.firstCardDisabled = false;
+        this.firstCard.disabled = false;
         this.shuffledDeck.splice(0, 1);
       }
-      if (this.secondCardDisabled) {
+      if (this.secondCard.disabled) {
         this.secondCard = this.shuffledDeck[0];
-        this.secondCardDisabled = false;
+        this.secondCard.disabled = false;
         this.shuffledDeck.splice(0, 1);
       }
-      if (this.thirdCardDisabled) {
+      if (this.thirdCard.disabled) {
         this.thirdCard = this.shuffledDeck[0];
-        this.thirdCardDisabled = false;
+        this.thirdCard.disabled = false;
         this.shuffledDeck.splice(0, 1);
       }
-      if (this.fourthCardDisabled) {
+      if (this.fourthCard.disabled) {
         this.fourthCard = this.shuffledDeck[0];
-        this.fourthCardDisabled = false;
+        this.fourthCard.disabled = false;
         this.shuffledDeck.splice(0, 1);
       }
-    } else {
+    } else if (this.hitPoints > 0) {
       this.endGame(true);
+    } else {
+      this.endGame(false);
     }
     console.log(this.shuffledDeck.length);
   }
@@ -161,24 +160,23 @@ export class App {
     this.shuffledDeck.push(this.secondCard);
     this.shuffledDeck.push(this.thirdCard);
     this.shuffledDeck.push(this.fourthCard);
-    this.turn.unableToRun = true;
     this.newTurn(true);
   }
 
   playFirstCard(card) {
-    this.firstCardDisabled = true;
+    this.firstCard.disabled = true;
     this.playCard(card)
   }
   playSecondCard(card) {
-    this.secondCardDisabled = true;
+    this.secondCard.disabled = true;
     this.playCard(card)
   }
   playThirdCard(card) {
-    this.thirdCardDisabled = true;
+    this.thirdCard.disabled = true;
     this.playCard(card)
   }
   playFourthCard(card) {
-    this.fourthCardDisabled = true;
+    this.fourthCard.disabled = true;
     this.playCard(card)
   }
 
@@ -237,7 +235,6 @@ export class App {
       }
     }
     this.discards.push(card);
-    console.log(this.shuffledDeck.length);
   }
 
   playWeapon(card) {

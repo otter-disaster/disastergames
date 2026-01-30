@@ -1,31 +1,44 @@
 {{title()}}
 <div>hit points: {{hitPoints}}</div>
-<div class="flex-container">
-  @if (cardsVisible) {
-    <button (click)="playFirstCard(firstCard)" class="card-button" [disabled]="firstCardDisabled"><img src={{firstCard?.imgsrc}} class={{firstCard?.class}}/></button>
-    <button (click)="playSecondCard(secondCard)" class="card-button" [disabled]="secondCardDisabled"><img src={{secondCard?.imgsrc}} class={{secondCard?.class}}/></button>
-    <button (click)="playThirdCard(thirdCard)" class="card-button" [disabled]="thirdCardDisabled"><img src={{thirdCard?.imgsrc}} class={{thirdCard?.class}}/></button>
-    <button (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCardDisabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/></button>
-  }
-</div>
+<div>remaining cards: {{shuffledDeck.length}}</div>
+<div>discards: {{discards.length}}</div>
 
-<div>
-  @if (weapon.isVisible) {
-    <p>Weapon: {{weapon.name}}</p>
-    <p>Weapon active: <input type="checkbox" (click)="toggleWeapon()"></p>
-    <p>Last enemy: {{weapon.latestEnemyName}}</p>
+@if (cardsVisible) {
+  <div class="flex-container">
+    <div>
+        <button (click)="playFirstCard(firstCard)" class="card-button" [disabled]="firstCard.disabled"><img src={{firstCard?.imgsrc}} class={{firstCard?.class}}/></button>
+        <button (click)="playSecondCard(secondCard)" class="card-button" [disabled]="secondCard.disabled"><img src={{secondCard?.imgsrc}} class={{secondCard?.class}}/></button>
+    </div>
+    <div>
+        <button (click)="playThirdCard(thirdCard)" class="card-button" [disabled]="thirdCard.disabled"><img src={{thirdCard?.imgsrc}} class={{thirdCard?.class}}/></button>
+        <button (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCard.disabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/></button>
+    </div>
+  </div>
+  <div class="flex-container-bottom">
+    @if (weapon.isVisible) {
+      <div>
+        <p>Weapon: {{weapon.name}}</p>
+        <p>Weapon active: <input type="checkbox" (click)="toggleWeapon()"></p>
+        <p>Last enemy: {{weapon.latestEnemyName}}</p>
+      </div>
+    }
+    @if(runVisible) {
+      <div class="action-button">
+        <button (click)="runAway()" [disabled]="turn.unableToRun">Run</button>
+      </div>
+    }
+  </div>
+
   }
-</div>
+
+
+
 
 @if (youWin) {
   <div>you win weee</div>
 }
 @if (youLose) {
   <div>you lose wooo</div>
-}
-
-@if(runVisible) {
-  <button (click)="runAway()" [disabled]="turn.unableToRun">Run</button>
 }
 @if(shuffleVisible) {
   <button (click)="shuffleDeck()">Shuffle</button>
