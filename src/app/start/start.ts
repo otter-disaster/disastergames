@@ -8,5 +8,4 @@ import { RouterLink } from '@angular/router';
   styleUrl: './start.scss',
 })
 export class Start {
-
 }
