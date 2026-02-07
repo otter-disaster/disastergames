@@ -8,7 +8,7 @@ export const routes: Routes = [
         component: Start,
       },
       {
-        path: 'scoundrel',
+        path: '#scoundrel',
         component: Scoundrel,
       }
 ];
