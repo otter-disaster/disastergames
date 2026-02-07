@@ -1,1 +1,11 @@
-<a href="https://otter-disaster.github.io/disastergames/#scoundrel">Play scoundrel</a>
+@if(isStartMenu) {
+    <div class="action-button">
+        <button (click)="playScoundrel()">Play Scoundrel</button>
+    </div>
+}
+@if(isPlayScoundrel) {
+    <app-scoundrel></app-scoundrel>
+    <div class="action-button">
+        <button (click)="backToStart()">Back to Start</button>
+    </div>
+}
