@@ -1,0 +1,31 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+.flex-container-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    .action-button {
+        display: flex;
+        justify-content: center;
+    }
+}
+.card-button {
+    margin: 10px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+.card-image {
+    height: 8.125rem;
+    width: 6.5rem;
+}
+.card-image-disabled {
+    height: 8.125rem;
+    width: 6.5rem;
+    opacity: 0.5;
+}
