@@ -12,6 +12,7 @@ export class Start {
   protected readonly title = signal('start');
   isStartMenu = true;
   isPlayScoundrel = false;
+  isSure = false;
 
   playScoundrel() {
     this.isStartMenu = false;
@@ -19,7 +20,12 @@ export class Start {
   }
 
   backToStart() {
-    this.isStartMenu = true;
-    this.isPlayScoundrel = false;
+    if (this.isSure) {
+      this.isSure = false;
+      this.isStartMenu = true;
+      this.isPlayScoundrel = false;
+    } else {
+      this.isSure = true;
+    }
   }
 }

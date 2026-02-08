@@ -66,7 +66,6 @@ export class Scoundrel {
   fourthCard;
 
   cardsVisible = false;
-  runVisible = false;
   shuffleVisible = true;
   youWin = false;
   youLose = false;
@@ -104,7 +103,6 @@ export class Scoundrel {
     this.shuffleVisible = false;
     this.youWin = false;
     this.youLose = false;
-    this.runVisible = true;
     this.hitPoints = 20;
     this.deal(true);
     this.cardsVisible = true;
@@ -152,7 +150,6 @@ export class Scoundrel {
     this.youWin = win;
     this.youLose = !win;
     this.shuffleVisible = true;
-    this.runVisible = false;
     this.weapon.isVisible = false;
   }
 

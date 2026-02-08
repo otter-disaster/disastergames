@@ -1,9 +1,37 @@
+.flex-title {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+    font-family: "Courier New", monospace;
+    font-size: 2.5em;
+}
 .flex-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
+    font-family: "Courier New", monospace;
+    font-size: 1em;
+}
+.flex-side {
+    width: 20%;
+    justify-self: center;
+    .side-row {
+        justify-self: center;
+    }
+}
+.flex-center {
+    width: 60%;
+    justify-self: center;
+    flex-direction: column;
+    .center-row {
+        justify-self: center;
+    }
 }
 .flex-container-bottom {
     display: flex;
@@ -15,7 +43,7 @@
     }
 }
 .card-button {
-    margin: 10px;
+    margin-top: 1em;
     padding: 0;
     border: none;
     background: none;
@@ -28,4 +56,15 @@
     height: 8.125rem;
     width: 6.5rem;
     opacity: 0.5;
+}
+.scoundrel-button {
+    font-family: "Courier New", monospace;
+    background-color: #d39494;
+    border: 1px solid #931212;
+    height: 3em;
+    width: 6em;
+    &:hover:enabled {
+        background-color: #d86c6c;
+        cursor: pointer;
+    }
 }

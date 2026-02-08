@@ -1,11 +1,17 @@
 @if(isStartMenu) {
-    <div class="action-button">
-        <button (click)="playScoundrel()">Play Scoundrel</button>
+    <div class="flex-title">hello</div>
+    <div class="flex-gamebox">
+        <button class="startgame-button" (click)="playScoundrel()">Play Scoundrel</button>
     </div>
 }
 @if(isPlayScoundrel) {
     <app-scoundrel></app-scoundrel>
-    <div class="action-button">
-        <button (click)="backToStart()">Back to Start</button>
+    <div class="back-button">
+        @if (isSure) {
+            <button (click)="backToStart()">Are you sure?</button>
+        }
+        @else {
+            <button (click)="backToStart()">Back to Start</button>
+        }
     </div>
 }
