@@ -4,8 +4,17 @@
   <div class="flex-side">
     <div class="side-row">
       @if (cardsVisible) {
-        <button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button>
-        <p>deck: {{shuffledDeck.length-4}}</p>
+        <p class="inside-row"><button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button></p>
+        <p class="inside-row">deck: {{shuffledDeck.length}}</p>
+        @if (showRules) {
+          <p class="rules-text">Sobrevive a la mazmorra jugando 41 de sus cartas.<br><br>En cada sala puedes pelear (jugar tres de las cartas y dejar la cuarta para la siguiente sala) o huir (devolver las cuatro cartas a debajo del mazo y robar cuatro cartas nuevas). No puedes huir dos veces seguidas.<br><br>Tréboles y picas: enemigos que te hacen tanto daño como su valor.<br><br>Corazones: pociones y te curan tanto como su valor (pero solo una vez por turno y nunca por encima de 20HP!).<br><br>Diamantes: armas que se equipan seleccionándolas.<br>-Si tienes un arma equipada y te equipas otra, la anterior se pierde.<br>-Mientras la lleves equipada y activada, un arma mitigará tanto daño como su Max Block Value al pelear con un enemigo de valor igual o inferior a su Highest Blockable Card.<br>-Tras derrotar a un enemigo, su valor Highest Blockable Card bajará hasta el valor de la carta inmediatamente inferior a ese enemigo.<br>-Un arma desactivada no bloquea daño, pero tampoco se degrada.</p>
+          <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Hide rules</button></p>
+        }
+        @else {
+          <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Show rules</button></p>
+        }
+        
+
       }
     </div>
   </div>
@@ -30,9 +39,16 @@
           <button (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCard.disabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/></button>
       </div>
       <div>
-        <p class="center-row">Weapon: {{weapon.name}}</p>
-        <p class="center-row">Weapon active: <input type="checkbox" (click)="toggleWeapon()"></p>
-        <p class="center-row">Last enemy: {{weapon.latestEnemyName}}</p>
+        @if(weapon.value > 0) {
+          <p class="center-row">Weapon active: <input type="checkbox" (click)="toggleWeapon()"></p>
+          <p class="center-row">Highest blockable card: {{weapon.maxEnemyName}}</p>
+          <p class="center-row">Max block value: {{weapon.value}}</p>
+          <p class="center-info">Weapon card: {{weapon.name}}</p>
+          <p class="center-info">Last enemy: {{weapon.latestEnemyName}}</p>
+        }
+        @else {
+          <p class="center-row">No weapon equipped</p>
+        }
       </div>
       <div class="center-row">
         <button class="scoundrel-button" (click)="runAway()" [disabled]="turn.unableToRun">Run</button>

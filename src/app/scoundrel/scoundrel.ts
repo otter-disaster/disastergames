@@ -9,10 +9,12 @@ import { Component, signal } from '@angular/core';
 export class Scoundrel {
   protected readonly title = signal('scoundrel');
 
+  showRules = false;
   shuffledDeck = [];
   discards = [];
-  weapon = {name: '', value: 0, maxEnemy: 15, latestEnemyName: '', isActive: false, isVisible: false, card: {}};
+  weapon = {name: 'none', value: 0, maxEnemy: 15, latestEnemyName: 'none', isActive: false, isVisible: false, card: {}, maxEnemyName: 'none'};
   turn = {healed: false, cardsPlayed: 0, unableToRun: false};
+  cardValuesToNames = ['none', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace', 'none'];
   deck = [
     {suit: 1, value: 14, name: 'ace of clubs', imgsrc: '/disastergames/img/aceofclubs.jpg', class: 'card-image'},
     {suit: 1, value: 2, name: 'two of clubs', imgsrc: '/disastergames/img/twoofclubs.jpg', class: 'card-image'},
@@ -75,26 +77,21 @@ export class Scoundrel {
   constructor() {
   }
 
-  enableAllCards() {
-    this.firstCard.disabled = false;
-    this.secondCard.disabled = false;
-    this.thirdCard.disabled = false;
-    this.fourthCard.disabled = false;
-    this.firstCard.class = 'card-image';
-    this.secondCard.class = 'card-image';
-    this.thirdCard.class = 'card-image';
-    this.fourthCard.class = 'card-image';
+  toggleRules() {
+    this.showRules = !this.showRules;
   }
 
   shuffleDeck() {
-    this.turn = {healed: false, cardsPlayed: 0, unableToRun: false};
     this.shuffledDeck = [];
+    this.discards = [];
     let i = 0;
     let numbersAdded = [];
     while (i < this.deck.length) {
       let n = this.getRandomInt(this.deck.length);
       if (numbersAdded.indexOf(n) <= -1) {
         this.shuffledDeck.push(this.deck[n]);
+        this.shuffledDeck[i].class = 'card-image';
+        this.shuffledDeck[i].disabled = false;
         numbersAdded.push(n);
         i++;
       }
@@ -104,9 +101,12 @@ export class Scoundrel {
     this.youWin = false;
     this.youLose = false;
     this.hitPoints = 20;
+    this.turn.healed = false;
+    this.turn.cardsPlayed = 0;
+    this.turn.unableToRun = false;
     this.deal(true);
     this.cardsVisible = true;
-    this.enableAllCards();
+    this.weapon = {name: 'none', value: 0, maxEnemy: 15, latestEnemyName: 'none', isActive: false, isVisible: false, card: {}, maxEnemyName: 'none'};
   }
 
   deal(didRun) {
@@ -210,7 +210,14 @@ export class Scoundrel {
       if (card.value - this.weapon.value > 0) {
         this.hitPoints = this.hitPoints - (card.value - this.weapon.value);
       }
+      if (card.value <= this.weapon.value) {
+        this.weapon.value = card.value-1;
+      }
+      if (this.weapon.value == 1) {
+        this.weapon.value = 0;
+      }
       this.weapon.maxEnemy = card.value;
+      this.weapon.maxEnemyName = this.cardValuesToNames[this.weapon.maxEnemy-2];
       this.weapon.latestEnemyName = card.name;
     } else {
       this.hitPoints = this.hitPoints - card.value;
@@ -245,6 +252,7 @@ export class Scoundrel {
     this.weapon.latestEnemyName = 'none';
     this.weapon.card = card;
     this.weapon.isVisible = true;
+    this.weapon.maxEnemyName = 'Ace';
   }
 
   toggleWeapon() {
