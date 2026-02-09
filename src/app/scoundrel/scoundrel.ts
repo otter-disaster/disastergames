@@ -215,6 +215,7 @@ export class Scoundrel {
       }
       if (this.weapon.value == 1) {
         this.weapon.value = 0;
+        this.discards.push(this.weapon.card);
       }
       this.weapon.maxEnemy = card.value;
       this.weapon.maxEnemyName = this.cardValuesToNames[this.weapon.maxEnemy-2];
