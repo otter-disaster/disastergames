@@ -21,6 +21,7 @@
   <div class="flex-center">
     @if (youWin) {
       <div class="center-row">you win weee</div>
+      <div class="center-row">final score: {{finalScore}}</div>
     }
     @if (youLose) {
       <div class="center-row">you lose wooo</div>
@@ -31,12 +32,12 @@
     @if (cardsVisible) {
       <div class="center-row">hit points: {{hitPoints}}</div>
       <div class="center-row">
-          <button (click)="playFirstCard(firstCard)" class="card-button" [disabled]="firstCard.disabled"><img src={{firstCard?.imgsrc}} class={{firstCard?.class}}/></button>
-          <button (click)="playSecondCard(secondCard)" class="card-button" [disabled]="secondCard.disabled"><img src={{secondCard?.imgsrc}} class={{secondCard?.class}}/></button>
+          <button (mouseover)='calculateCard(firstCard)' (click)="playFirstCard(firstCard)" class="card-button" [disabled]="firstCard.disabled"><img src={{firstCard?.imgsrc}} class={{firstCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+          <button (mouseover)='calculateCard(secondCard)' (click)="playSecondCard(secondCard)" class="card-button" [disabled]="secondCard.disabled"><img src={{secondCard?.imgsrc}} class={{secondCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
       </div>
       <div class="center-row">
-          <button (click)="playThirdCard(thirdCard)" class="card-button" [disabled]="thirdCard.disabled"><img src={{thirdCard?.imgsrc}} class={{thirdCard?.class}}/></button>
-          <button (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCard.disabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/></button>
+          <button (mouseover)='calculateCard(thirdCard)' (click)="playThirdCard(thirdCard)" class="card-button" [disabled]="thirdCard.disabled"><img src={{thirdCard?.imgsrc}} class={{thirdCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+          <button (mouseover)='calculateCard(fourthCard)' (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCard.disabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
       </div>
       <div>
         @if(weapon.value > 0) {

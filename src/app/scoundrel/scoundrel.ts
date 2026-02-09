@@ -15,6 +15,9 @@ export class Scoundrel {
   weapon = {name: 'none', value: 0, maxEnemy: 15, latestEnemyName: 'none', isActive: false, isVisible: false, card: {}, maxEnemyName: 'none'};
   turn = {healed: false, cardsPlayed: 0, unableToRun: false};
   cardValuesToNames = ['none', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace', 'none'];
+  hoverText = '';
+  hoverClass = '';
+  finalScore = 0;
   deck = [
     {suit: 1, value: 14, name: 'ace of clubs', imgsrc: '/disastergames/img/aceofclubs.jpg', class: 'card-image'},
     {suit: 1, value: 2, name: 'two of clubs', imgsrc: '/disastergames/img/twoofclubs.jpg', class: 'card-image'},
@@ -151,6 +154,12 @@ export class Scoundrel {
     this.youLose = !win;
     this.shuffleVisible = true;
     this.weapon.isVisible = false;
+    this.finalScore = this.hitPoints;
+    for (var card of this.shuffledDeck) {
+      if (card.suit == 4) {
+        this.finalScore += card.value;
+      }
+    }
   }
 
   runAway() {
@@ -215,6 +224,7 @@ export class Scoundrel {
       }
       if (this.weapon.value == 1) {
         this.weapon.value = 0;
+        this.weapon.isActive = false;
         this.discards.push(this.weapon.card);
       }
       this.weapon.maxEnemy = card.value;
@@ -262,10 +272,60 @@ export class Scoundrel {
   }
 
   newTurn(didRun) {
+    this.hoverText = '-';
     this.turn.healed = false;
     this.turn.cardsPlayed = 0;
     this.turn.unableToRun = didRun;
     this.deal(didRun);
+  }
+
+  calculateCard(card) {
+    let hoverValue;
+    switch (card.suit) {
+      case 1:
+        if (this.weapon && this.weapon.isActive && this.weapon.maxEnemy > card.value) {
+          hoverValue = card.value - this.weapon.value;
+        } else {
+          hoverValue = card.value;
+        }
+        if (this.hitPoints <= hoverValue) {
+          this.hoverClass = 'strong-enemy-tooltip';
+        } else if (hoverValue <= 0) {
+          hoverValue = 0;
+          this.hoverClass = 'weak-enemy-tooltip';
+        } else {
+          this.hoverClass = 'enemy-tooltip';
+        }
+        this.hoverText = 'damage: ' + hoverValue + 'hp';
+        break;
+      case 2:
+        if (this.weapon && this.weapon.isActive && this.weapon.maxEnemy > card.value) {
+          hoverValue = card.value - this.weapon.value;
+        } else {
+          hoverValue = card.value;
+        }
+        if (this.hitPoints <= hoverValue) {
+          this.hoverClass = 'strong-enemy-tooltip';
+        } else if (hoverValue <= 0) {
+          hoverValue = 0;
+          this.hoverClass = 'weak-enemy-tooltip';
+        } else {
+          this.hoverClass = 'enemy-tooltip';
+        }
+        this.hoverText = 'damage: ' + hoverValue + 'hp';
+        break;
+      case 3:
+        this.hoverText = 'equip weapon';
+        this.hoverClass = 'weapon-tooltip';
+        break;
+      case 4:
+        this.hoverText = 'heal ' + card.value + 'hp';
+        this.hoverClass = 'potion-tooltip';
+        break;
+      default:
+        console.log('oopsie doopsie! your cards are kapootsie!');
+        break;
+    }
   }
 
   // used to shuffle
