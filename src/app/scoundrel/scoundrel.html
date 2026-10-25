@@ -1,67 +1,143 @@
-<div class="flex-title">scoundrel</div>
+@if (isOnPuter) {
+  <body class="puter">
+    <div class="flex-title">scoundrel</div>
 
-<div class="flex-container">
-  <div class="flex-side">
-    <div class="side-row">
-      @if (cardsVisible) {
-        <p class="inside-row"><button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button></p>
-        <p class="inside-row">deck: {{shuffledDeck.length}}</p>
-        @if (showRules) {
-          <p class="rules-text">Sobrevive a la mazmorra jugando 41 de sus cartas.<br><br>En cada sala puedes pelear (jugar tres de las cartas y dejar la cuarta para la siguiente sala) o huir (devolver las cuatro cartas a debajo del mazo y robar cuatro cartas nuevas). No puedes huir dos veces seguidas.<br><br>Tréboles y picas: enemigos que te hacen tanto daño como su valor.<br><br>Corazones: pociones y te curan tanto como su valor (pero solo una vez por turno y nunca por encima de 20HP!).<br><br>Diamantes: armas que se equipan seleccionándolas.<br>-Si tienes un arma equipada y te equipas otra, la anterior se pierde.<br>-Mientras la lleves equipada y activada, un arma mitigará tanto daño como su Max Block Value al pelear con un enemigo de valor igual o inferior a su Highest Blockable Card.<br>-Tras derrotar a un enemigo, su valor Highest Blockable Card bajará hasta el valor de la carta inmediatamente inferior a ese enemigo.<br>-Un arma desactivada no bloquea daño, pero tampoco se degrada.</p>
-          <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Hide rules</button></p>
+    <div class="flex-container">
+      <div class="flex-side">
+        <div class="side-row">
+          @if (cardsVisible) {
+            <p class="inside-row"><button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button></p>
+            <p class="inside-row">deck: {{shuffledDeck.length}}</p>
+            @if (showRules) {
+              <p class="rules-text">Sobrevive a la mazmorra jugando 41 de sus cartas.<br><br>En cada sala puedes pelear (jugar tres de las cartas y dejar la cuarta para la siguiente sala) o huir (devolver las cuatro cartas a debajo del mazo y robar cuatro cartas nuevas). No puedes huir dos veces seguidas.<br><br>Tréboles y picas: enemigos que te hacen tanto daño como su valor.<br><br>Corazones: pociones y te curan tanto como su valor (pero solo una vez por turno y nunca por encima de 20HP!).<br><br>Diamantes: armas que se equipan seleccionándolas.<br>-Si tienes un arma equipada y te equipas otra, la anterior se pierde.<br>-Mientras la lleves equipada y activada, un arma mitigará tanto daño como su Max Block Value al pelear con un enemigo de valor igual o inferior a su Highest Blockable Card.<br>-Tras derrotar a un enemigo, su valor Highest Blockable Card bajará hasta el valor de la carta inmediatamente inferior a ese enemigo.<br>-Un arma desactivada no bloquea daño, pero tampoco se degrada.</p>
+              <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Hide rules</button></p>
+            }
+            @else {
+              <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Show rules</button></p>
+            }
+          }
+        </div>
+      </div>
+      <div class="flex-center">
+        @if (youWin) {
+          <div class="center-row">you win weee</div>
+          <div class="center-row">final score: {{finalScore}}</div>
         }
-        @else {
-          <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Show rules</button></p>
+        @if (youLose) {
+          <div class="center-row">you lose wooo</div>
         }
-        
+        @if(shuffleVisible) {
+          <div class="center-row"><button class="scoundrel-button" (click)="shuffleDeck()">Shuffle</button></div>
+        }
+        @if (cardsVisible) {
+          <div class="center-row">hit points: {{hitPoints}}</div>
+          <div class="center-row">
+              <button (mouseover)='calculateCard(firstCard)' (click)="playFirstCard(firstCard)" class="card-button" [disabled]="firstCard.disabled"><img src={{firstCard?.imgsrc}} class={{firstCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+              <button (mouseover)='calculateCard(secondCard)' (click)="playSecondCard(secondCard)" class="card-button" [disabled]="secondCard.disabled"><img src={{secondCard?.imgsrc}} class={{secondCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+          </div>
+          <div class="center-row">
+              <button (mouseover)='calculateCard(thirdCard)' (click)="playThirdCard(thirdCard)" class="card-button" [disabled]="thirdCard.disabled"><img src={{thirdCard?.imgsrc}} class={{thirdCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+              <button (mouseover)='calculateCard(fourthCard)' (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCard.disabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+          </div>
+          <div>
+            @if(weapon.value > 0) {
+              <p class="center-row">Weapon active: <input type="checkbox" (click)="toggleWeapon()"></p>
+              <p class="center-row">Highest blockable card: {{weapon.maxEnemyName}}</p>
+              <p class="center-row">Max block value: {{weapon.value}}</p>
+              <p class="center-info">Weapon card: {{weapon.name}}</p>
+              <p class="center-info">Last enemy: {{weapon.latestEnemyName}}</p>
+            }
+            @else {
+              <p class="center-row">No weapon equipped</p>
+            }
+          </div>
+          <div class="center-row">
+            <button class="scoundrel-button" (click)="runAway()" [disabled]="turn.unableToRun">Run</button>
+          </div>
+        }
+      </div>
+      <div class="flex-side">
+        <div class="side-row">
+          @if (cardsVisible) {
+            <button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button>
+            <p>discards: {{discards.length}}</p>
+          }
+        </div>
+      </div>
+    </div>
+  </body>
+}
+@if (isOnPhone) {
+  <body class="phone">
+    <div class="flex-title">scoundrel</div>
 
-      }
-    </div>
-  </div>
-  <div class="flex-center">
-    @if (youWin) {
-      <div class="center-row">you win weee</div>
-      <div class="center-row">final score: {{finalScore}}</div>
-    }
-    @if (youLose) {
-      <div class="center-row">you lose wooo</div>
-    }
-    @if(shuffleVisible) {
-      <div class="center-row"><button class="scoundrel-button" (click)="shuffleDeck()">Shuffle</button></div>
-    }
-    @if (cardsVisible) {
-      <div class="center-row">hit points: {{hitPoints}}</div>
-      <div class="center-row">
-          <button (mouseover)='calculateCard(firstCard)' (click)="playFirstCard(firstCard)" class="card-button" [disabled]="firstCard.disabled"><img src={{firstCard?.imgsrc}} class={{firstCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
-          <button (mouseover)='calculateCard(secondCard)' (click)="playSecondCard(secondCard)" class="card-button" [disabled]="secondCard.disabled"><img src={{secondCard?.imgsrc}} class={{secondCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
-      </div>
-      <div class="center-row">
-          <button (mouseover)='calculateCard(thirdCard)' (click)="playThirdCard(thirdCard)" class="card-button" [disabled]="thirdCard.disabled"><img src={{thirdCard?.imgsrc}} class={{thirdCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
-          <button (mouseover)='calculateCard(fourthCard)' (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCard.disabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
-      </div>
-      <div>
-        @if(weapon.value > 0) {
-          <p class="center-row">Weapon active: <input type="checkbox" (click)="toggleWeapon()"></p>
-          <p class="center-row">Highest blockable card: {{weapon.maxEnemyName}}</p>
-          <p class="center-row">Max block value: {{weapon.value}}</p>
-          <p class="center-info">Weapon card: {{weapon.name}}</p>
-          <p class="center-info">Last enemy: {{weapon.latestEnemyName}}</p>
-        }
-        @else {
-          <p class="center-row">No weapon equipped</p>
-        }
-      </div>
-      <div class="center-row">
-        <button class="scoundrel-button" (click)="runAway()" [disabled]="turn.unableToRun">Run</button>
-      </div>
-  }
-  </div>
-  <div class="flex-side">
-    <div class="side-row">
+    <div class="flex-container">
       @if (cardsVisible) {
-        <button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button>
-        <p>discards: {{discards.length}}</p>
+        <div class="flex-center">
+          <div class="center-row">hit points: {{hitPoints}}</div>
+        </div>
       }
+      <div class="flex-top">
+        @if (youWin) {
+          <div class="center-row">you win weee</div>
+          <div class="center-row">final score: {{finalScore}}</div>
+        }
+        @if (youLose) {
+          <div class="center-row">you lose wooo</div>
+        }
+        @if(shuffleVisible) {
+          <div class="center-row"><button class="scoundrel-button" (click)="shuffleDeck()">Shuffle</button></div>
+        }
+        @if (cardsVisible) {
+          <div class="center-row">
+              <button (mouseover)='calculateCard(firstCard)' (click)="playFirstCard(firstCard)" class="card-button" [disabled]="firstCard.disabled"><img src={{firstCard?.imgsrc}} class={{firstCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+              <button (mouseover)='calculateCard(secondCard)' (click)="playSecondCard(secondCard)" class="card-button" [disabled]="secondCard.disabled"><img src={{secondCard?.imgsrc}} class={{secondCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+          </div>
+          <div class="center-row">
+              <button (mouseover)='calculateCard(thirdCard)' (click)="playThirdCard(thirdCard)" class="card-button" [disabled]="thirdCard.disabled"><img src={{thirdCard?.imgsrc}} class={{thirdCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+              <button (mouseover)='calculateCard(fourthCard)' (click)="playFourthCard(fourthCard)" class="card-button" [disabled]="fourthCard.disabled"><img src={{fourthCard?.imgsrc}} class={{fourthCard?.class}}/><span class="tooltiptext"><span class={{hoverClass}}>{{hoverText}}</span></span></button>
+          </div>
+        }
+      </div>
+      <div class="flex-center">
+        <div class="center-row">
+          <button class="scoundrel-button" (click)="runAway()" [disabled]="turn.unableToRun">Run</button>
+        </div>
+      </div>
+      <div class="flex-center">
+        <div>
+          @if(weapon.value > 0) {
+            <p class="center-row">Weapon active: <input type="checkbox" (click)="toggleWeapon()"></p>
+            <p class="center-row">Highest blockable card: {{weapon.maxEnemyName}}</p>
+            <p class="center-row">Max block value: {{weapon.value}}</p>
+          }
+          @else {
+            <p class="center-row">No weapon equipped</p>
+          }
+        </div>
+      </div>
+      <div class="flex-bottom">
+        <div class="side-row">
+          @if (cardsVisible) {
+            <p class="inside-row"><button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button></p>
+          }
+        </div>
+        <div class="card-info">
+          <p>deck: {{shuffledDeck.length}}</p>
+          <p>discards: {{discards.length}}</p>
+        </div>
+      </div>
+      <div class="flex-bottom">
+        <div class="rules-row">
+          @if (showRules) {
+            <p class="rules-text">Sobrevive a la mazmorra jugando 41 de sus cartas.<br><br>En cada sala puedes pelear (jugar tres de las cartas y dejar la cuarta para la siguiente sala) o huir (devolver las cuatro cartas a debajo del mazo y robar cuatro cartas nuevas). No puedes huir dos veces seguidas.<br><br>Tréboles y picas: enemigos que te hacen tanto daño como su valor.<br><br>Corazones: pociones y te curan tanto como su valor (pero solo una vez por turno y nunca por encima de 20HP!).<br><br>Diamantes: armas que se equipan seleccionándolas.<br>-Si tienes un arma equipada y te equipas otra, la anterior se pierde.<br>-Mientras la lleves equipada y activada, un arma mitigará tanto daño como su Max Block Value al pelear con un enemigo de valor igual o inferior a su Highest Blockable Card.<br>-Tras derrotar a un enemigo, su valor Highest Blockable Card bajará hasta el valor de la carta inmediatamente inferior a ese enemigo.<br>-Un arma desactivada no bloquea daño, pero tampoco se degrada.</p>
+            <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Hide rules</button></p>
+          }
+          @else {
+            <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Show rules</button></p>
+          }
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </body>
+}

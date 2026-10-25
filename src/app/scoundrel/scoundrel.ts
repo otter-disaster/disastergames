@@ -6,11 +6,15 @@ import { Component, signal } from '@angular/core';
   templateUrl: './scoundrel.html',
   styleUrl: './scoundrel.scss'
 })
+
 export class Scoundrel {
   protected readonly title = signal('scoundrel');
 
   showRules = false;
+  isOnPuter = true;
+  isOnPhone = false;
   shuffledDeck = [];
+  deckSize;
   discards = [];
   weapon = {name: 'none', value: 0, maxEnemy: 15, latestEnemyName: 'none', isActive: false, isVisible: false, card: {}, maxEnemyName: 'none'};
   turn = {healed: false, cardsPlayed: 0, unableToRun: false};
@@ -100,6 +104,13 @@ export class Scoundrel {
       }
     }
     console.log(this.shuffledDeck);
+    if(navigator.userAgent.toLowerCase().includes('mobi')) {  
+       this.isOnPuter = false;
+       this.isOnPhone = true;
+    } else {
+      this.isOnPuter = true;
+      this.isOnPhone = false;
+    }
     this.shuffleVisible = false;
     this.youWin = false;
     this.youLose = false;
@@ -146,6 +157,7 @@ export class Scoundrel {
       this.endGame(false);
     }
     console.log(this.shuffledDeck.length);
+    this.deckSize = this.shuffledDeck.length - 4;
   }
 
   endGame(win) {
