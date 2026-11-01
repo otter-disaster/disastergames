@@ -190,6 +190,7 @@
             }
             .rules-text {
                 font-size: 10px;
+                width: 400%;
             }
         }
     }
@@ -201,6 +202,7 @@
             justify-self: center;
             display: flex;
             justify-content: center;
+            margin-bottom: 1em;
             .inside-row {
                 justify-self: center;
             }
@@ -266,12 +268,6 @@
             }
             .weapon-tooltip {
                 color: #c4c4c4;
-            }
-        }
-        &:hover:enabled {
-            cursor: pointer;
-            .tooltiptext {
-                visibility: visible;
             }
         }
     }

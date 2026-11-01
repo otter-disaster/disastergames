@@ -89,6 +89,7 @@ export class Scoundrel {
   }
 
   shuffleDeck() {
+    this.deckSize = 36;
     this.shuffledDeck = [];
     this.discards = [];
     let i = 0;
@@ -103,7 +104,6 @@ export class Scoundrel {
         i++;
       }
     }
-    console.log(this.shuffledDeck);
     if(navigator.userAgent.toLowerCase().includes('mobi')) {  
        this.isOnPuter = false;
        this.isOnPhone = true;
@@ -123,7 +123,7 @@ export class Scoundrel {
     this.weapon = {name: 'none', value: 0, maxEnemy: 15, latestEnemyName: 'none', isActive: false, isVisible: false, card: {}, maxEnemyName: 'none'};
   }
 
-  deal(didRun) {
+  deal(didRun: boolean) {
     if (didRun) {
       this.firstCard = this.shuffledDeck[0];
       this.secondCard = this.shuffledDeck[1];
@@ -151,13 +151,13 @@ export class Scoundrel {
         this.fourthCard.disabled = false;
         this.shuffledDeck.splice(0, 1);
       }
+      this.deckSize -= 3;
     } else if (this.hitPoints > 0) {
       this.endGame(true);
     } else {
       this.endGame(false);
     }
     console.log(this.shuffledDeck.length);
-    this.deckSize = this.shuffledDeck.length - 4;
   }
 
   endGame(win) {
