@@ -9,7 +9,7 @@
             <p class="inside-row"><button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button></p>
             <p class="inside-row">deck: {{shuffledDeck.length}}</p>
             @if (showRules) {
-              <p class="rules-text">Sobrevive a la mazmorra jugando 41 de sus cartas.<br><br>En cada sala puedes pelear (jugar tres de las cartas y dejar la cuarta para la siguiente sala) o huir (devolver las cuatro cartas a debajo del mazo y robar cuatro cartas nuevas). No puedes huir dos veces seguidas.<br><br>Tréboles y picas: enemigos que te hacen tanto daño como su valor.<br><br>Corazones: pociones y te curan tanto como su valor (pero solo una vez por turno y nunca por encima de 20HP!).<br><br>Diamantes: armas que se equipan seleccionándolas.<br>-Si tienes un arma equipada y te equipas otra, la anterior se pierde.<br>-Mientras la lleves equipada y activada, un arma mitigará tanto daño como su Max Block Value al pelear con un enemigo de valor igual o inferior a su Highest Blockable Card.<br>-Tras derrotar a un enemigo, su valor Highest Blockable Card bajará hasta el valor de la carta inmediatamente inferior a ese enemigo.<br>-Un arma desactivada no bloquea daño, pero tampoco se degrada.</p>
+              <p class="rules-text">Survive the dungeon by playing 41 cards.<br><br>In each room you have two options: fight (play three of the cards and leave the other for the next room) o flee (return all four to the bottom of the deck and draw four new cards). You cannot run twice in a row.<br><br>Clubs and spades: Enemies that deal as much damage as their value.<br><br>Hearts: potions that heal you as much as their value (once per turn and never above 20HP!).<br><br>Diamonds: weapons that can be equipped.<br>-If you have a weapon equipped and equip another, you lose the previous one<br>-As long as a weapon is equipped and active, it will prevent as much damage as its Max Block Value when fighting an enemy of a value equal or lesser than its Highest Blockable Card.<br>-After defeating an enemy, the Highest Blockable Card value of your active weapon will be lowered to the value immediately below the defeated enemy.<br>-An inactive weapon prevents no damage, but does not degrade.</p>
               <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Hide rules</button></p>
             }
             @else {
@@ -60,7 +60,7 @@
         <div class="side-row">
           @if (cardsVisible) {
             <button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button>
-            <p>discards: {{discards.length}}</p>
+            <p class="discards-text">discards: {{discards.length}}</p>
           }
         </div>
       </div>
@@ -130,7 +130,7 @@
       <div class="flex-bottom">
         @if (showRules) {
           <div class="rules-row-text">
-              <p class="rules-text">Sobrevive a la mazmorra jugando 41 de sus cartas.<br><br>En cada sala puedes pelear (jugar tres de las cartas y dejar la cuarta para la siguiente sala) o huir (devolver las cuatro cartas a debajo del mazo y robar cuatro cartas nuevas). No puedes huir dos veces seguidas.<br><br>Tréboles y picas: enemigos que te hacen tanto daño como su valor.<br><br>Corazones: pociones y te curan tanto como su valor (pero solo una vez por turno y nunca por encima de 20HP!).<br><br>Diamantes: armas que se equipan seleccionándolas.<br>-Si tienes un arma equipada y te equipas otra, la anterior se pierde.<br>-Mientras la lleves equipada y activada, un arma mitigará tanto daño como su Max Block Value al pelear con un enemigo de valor igual o inferior a su Highest Blockable Card.<br>-Tras derrotar a un enemigo, su valor Highest Blockable Card bajará hasta el valor de la carta inmediatamente inferior a ese enemigo.<br>-Un arma desactivada no bloquea daño, pero tampoco se degrada.</p>
+              <p class="rules-text">Survive the dungeon by playing 41 cards.<br><br>In each room you have two options: fight (play three of the cards and leave the other for the next room) o flee (return all four to the bottom of the deck and draw four new cards). You cannot run twice in a row.<br><br>Clubs and spades: Enemies that deal as much damage as their value.<br><br>Hearts: potions that heal you as much as their value (once per turn and never above 20HP!).<br><br>Diamonds: weapons that can be equipped.<br>-If you have a weapon equipped and equip another, you lose the previous one<br>-As long as a weapon is equipped and active, it will prevent as much damage as its Max Block Value when fighting an enemy of a value equal or lesser than its Highest Blockable Card.<br>-After defeating an enemy, the Highest Blockable Card value of your active weapon will be lowered to the value immediately below the defeated enemy.<br>-An inactive weapon prevents no damage, but does not degrade.</p>
           </div>
         }
         @else {
