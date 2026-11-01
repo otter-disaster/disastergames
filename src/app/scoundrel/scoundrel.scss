@@ -14,7 +14,7 @@
     background-color: #ebebeb;
     border: 1px solid #272727;
     height: 3em;
-    width: 6em;
+    width: 100%;
     &:hover:enabled {
         background-color: #fafafa;
         cursor: pointer;
@@ -182,10 +182,11 @@
         }
         .rules-row {
             justify-self: center;
-            width: 90%;
+            width: 20%;
             justify-items: center;
             .inside-row {
                 justify-self: center;
+                width: 100%;
             }
             .rules-text {
                 font-size: 10px;
@@ -199,6 +200,7 @@
         .center-row {
             justify-self: center;
             display: flex;
+            justify-content: center;
             .inside-row {
                 justify-self: center;
             }
