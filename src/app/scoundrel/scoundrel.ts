@@ -14,7 +14,6 @@ export class Scoundrel {
   isOnPuter = true;
   isOnPhone = false;
   shuffledDeck = [];
-  deckSize;
   discards = [];
   weapon = {name: 'none', value: 0, maxEnemy: 15, latestEnemyName: 'none', isActive: false, isVisible: false, card: {}, maxEnemyName: 'none'};
   turn = {healed: false, cardsPlayed: 0, unableToRun: false};
@@ -89,7 +88,6 @@ export class Scoundrel {
   }
 
   shuffleDeck() {
-    this.deckSize = 36;
     this.shuffledDeck = [];
     this.discards = [];
     let i = 0;
@@ -151,7 +149,6 @@ export class Scoundrel {
         this.fourthCard.disabled = false;
         this.shuffledDeck.splice(0, 1);
       }
-      this.deckSize -= 3;
     } else if (this.hitPoints > 0) {
       this.endGame(true);
     } else {

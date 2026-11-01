@@ -7,7 +7,7 @@
         <div class="side-row">
           @if (cardsVisible) {
             <p class="inside-row"><button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button></p>
-            <p class="inside-row">deck: {{deckSize}}</p>
+            <p class="inside-row">deck: {{shuffledDeck.length}}</p>
             @if (showRules) {
               <p class="rules-text">Sobrevive a la mazmorra jugando 41 de sus cartas.<br><br>En cada sala puedes pelear (jugar tres de las cartas y dejar la cuarta para la siguiente sala) o huir (devolver las cuatro cartas a debajo del mazo y robar cuatro cartas nuevas). No puedes huir dos veces seguidas.<br><br>Tréboles y picas: enemigos que te hacen tanto daño como su valor.<br><br>Corazones: pociones y te curan tanto como su valor (pero solo una vez por turno y nunca por encima de 20HP!).<br><br>Diamantes: armas que se equipan seleccionándolas.<br>-Si tienes un arma equipada y te equipas otra, la anterior se pierde.<br>-Mientras la lleves equipada y activada, un arma mitigará tanto daño como su Max Block Value al pelear con un enemigo de valor igual o inferior a su Highest Blockable Card.<br>-Tras derrotar a un enemigo, su valor Highest Blockable Card bajará hasta el valor de la carta inmediatamente inferior a ese enemigo.<br>-Un arma desactivada no bloquea daño, pero tampoco se degrada.</p>
               <p class="inside-row"><button class="rules-button" (click)="toggleRules()">Hide rules</button></p>
@@ -122,7 +122,7 @@
               <p class="inside-row"><button class="card-button" [disabled]=true><img src="/disastergames/img/cardback.jpg" class="card-image"/></button></p>
           </div>
           <div class="card-info">
-            <p>deck: {{deckSize}}</p>
+            <p>deck: {{shuffledDeck.length}}</p>
             <p>discards: {{discards.length}}</p>
           </div>
         </div>
