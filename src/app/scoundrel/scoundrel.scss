@@ -59,12 +59,15 @@
     }
     .flex-center {
         width: 40%;
+        display: flex;
         justify-self: center;
         flex-direction: column;
         .center-row {
             justify-self: center;
-            margin: 1em;
+            margin-bottom: 1em;
             padding: 0em;
+            display: flex;
+            justify-content: center;
         }
         .center-info {
             justify-self: center;
